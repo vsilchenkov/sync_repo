@@ -1,0 +1,6 @@
+*.cf
+*.log
+config.yaml
+metadata_merge.xml
+settings/metadata.txt
+*.txt

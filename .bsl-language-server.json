@@ -1,0 +1,35 @@
+{
+  "$schema": "https://1c-syntax.github.io/bsl-language-server/configuration/schema.json",
+  "language": "ru",
+  "diagnostics": 
+  {
+    "computeTrigger": "onType",
+    "parameters": 
+	{
+      "LineLength": 
+		{
+        "maxLineLength": 120
+		},
+	  "NumberOfOptionalParams": 
+		{
+    "maxOptionalParamsCount": 6
+		},
+	"CommentedCode": 
+		{
+		"threshold": 0.9,
+		"exclusionPrefixes": ""
+		},
+	"CognitiveComplexity": 
+		{
+		"complexityThreshold": 20,
+		"checkModuleBody": true
+		},
+	"MissingVariablesDescription": false,
+	"MethodSize": false,
+	"IfConditionComplexity": 
+	{
+		"maxIfConditionComplexity": 5
+	}	  
+    }
+  }
+}
