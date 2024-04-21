@@ -1,6 +1,13 @@
 *.cf
 *.log
-config.yaml
-metadata_merge.xml
-settings/metadata.txt
 *.txt
+
+autumn-properties.yml
+metadata_merge.xml
+
+# example
+!settings/metadata_example.txt
+
+# config
+bat/config/*.yaml
+!bat/config/config_task.yaml

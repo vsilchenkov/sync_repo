@@ -26,6 +26,10 @@
 		},
 	"MissingVariablesDescription": false,
 	"MethodSize": false,
+	"MissingReturnedValueDescription": {
+		"allowShortDescriptionReturnValues": true
+	},
+	"MissingParameterDescription": false,
 	"IfConditionComplexity": 
 	{
 		"maxIfConditionComplexity": 5

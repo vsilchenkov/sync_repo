@@ -1,0 +1,21 @@
+Общие:
+    Ответственный: "Фамилия Имя"
+    КаталогНастроек: settings
+    ПутьККаталогуCF: "\\cf"
+    ПутьККаталогуCFe: "\\cfe"
+    Файлы:
+        repo_test: repo_connect_test.xml
+        merge: merge.xml  
+        metadata: metadata.txt  
+        metadata_merge: metadata_merge.xml     
+    Телеграм:
+        BotID: ""
+        Токен: ""
+    Debug:
+        ИдентификаторБазы: "REPO"
+        ФайлНастроек: "tests\\config_debug.yaml"
+        ФайлКоманд: "tests\\commands_debug.yaml"
+        ИдентификаторКоманд: "Команды"        
+        # ФайлГрупповыхКоманд: "tests\\group_commands_debug.yaml"
+        ИдентификаторГрупповыхКоманд: "Запуск"
+        КаталогСкрипта: "sync_repo"   
