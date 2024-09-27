@@ -2,11 +2,11 @@
 #Использовать autumn-cli
 #Использовать autumn-async
 
-#Использовать "srс/core"
-#Использовать "srс/commands"
-#Использовать "srс/templates"
-#Использовать "srс/cli"
-#Использовать "srс/import"
+#Использовать "src/core"
+#Использовать "src/commands"
+#Использовать "src/templates"
+#Использовать "src/cli"
+#Использовать "src/import"
 
 #Область Основной_блок
 
