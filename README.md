@@ -1,13 +1,5 @@
 # Автоматизация обновления конфигурации 1С
 
-- <https://gitlab.ci.vozovoz.ru/admins/sync_repo>
-
-## Clone
-
-- Установить Git - <https://git-scm.com/download/win>
-- Склонировать репозиторий с помощью команды `git clone <https://oauth2:Токен@gitlab.ci.vozovoz.ru/admins/sync_repo.git>`, где токен указать из настроек в профиле пользователя.
-- Для получения изменений использовать команду `git pull`
-
 ## Установка
 
 - Установить OneScript - <https://oscript.io/docs/page/install>, перезагурзиться.
