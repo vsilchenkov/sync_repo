@@ -7,30 +7,10 @@ import groovy.transform.Field
 def utils = new Utils()
 
 @Field
-List<String> jenkinsAgent_values = ['DEV-1C', 'v_silchenkov']
+List<String> jenkinsAgent_values = ['DEV-1C-UPD', 'DEV-1C', 'v_silchenkov']
 
 @Field
-List<String> command_file_values = ['update_PP',
-                                'update_QA',
-                                'update_QP',
-                                'update_REPO',
-                                'update_all',
-                                'update_VModeling',
-                                'update_hrm',
-                                'update_hrm3_dev',
-                                'update_hrm3_dev',
-                                'close_config_PP',
-                                'close_config_QA',
-                                'close_config_QP',
-                                'close_config_REPO',
-                                'meta_update_PP',
-                                'meta_update_QA',
-                                'meta_update_QP',
-                                'meta_update_all',
-                                'connect_repo_all',
-                                'task_xwiki_update',
-                                'stend_lrn_update',
-                                'debug'
+List<String> command_file_values = ['update_PP'
                                 ]
 
 pipeline {
@@ -49,20 +29,22 @@ pipeline {
                                  (params.jenkinsAgent ? [params.jenkinsAgent] : [])),
                 description: 'Нода дженкинса, на которой запускать пайплайн. По умолчанию master')
 
-        text(defaultValue: "${env.listMetadataBuild}", description: 'Список метаданных, которые требуется обновить. Используется в сценариях с префиксом \"task_\"', name: 'listMetadataBuild')
+        text(defaultValue: "${env.listMetadataBuild}", description: 'Список метаданных, которые требуется обновить. Используется в сценариях с префиксом \"meta_\".' + '\n' +'Напишите символ *, чтобы обновить полностью все метаданные.', name: 'listMetadataBuild')
+        booleanParam(defaultValue: "${env.includeChildObjects}", description: 'Обновлять объекты из списка метаданных рекурсивно', name: 'includeChildObjects')
         booleanParam(defaultValue: false, description: 'Использовать динамическое обновление', name: 'dynamicUpdate')
         booleanParam(defaultValue: false, description: 'Оставить блокировку ИБ', name: 'keepLockIB')
         string(defaultValue: "${env.pausePredBuild}", description: 'Пауза после отправки уведомления и запуском сценария (в секундах). Позволяет переопределить паузу из настроек по умолчанию (5 мин), если она включена в сценарии. (0 - оставить по умолчанию)', name: 'pausePredBuild')        
+        string(defaultValue: "1", description: 'Начать с указанной позиции. Использовать, если при обновлении вышла ошибка и нужно после исправления продолжить сценарий', name: 'startFromPosition')        
+        string(defaultValue: "${env.baseID}", description: 'Идентификатор базы. Используется в сценариях с постфиксом base_ID', name: 'baseID')
+        string(defaultValue: "${env.platformID}", description: 'Идентификатор используемой платформы для базы base_ID. Используется в сценариях с постфиксом base_ID', name: 'platformID')
         booleanParam(defaultValue: "${env.sendMessageStatusJob}", description: 'Отправлять сообщение о статусе задания Jenkins', name: 'sendMessageStatusJob')
-        booleanParam(defaultValue: "${env.debug}", description: 'Отладка', name: 'debug')
-   
+        booleanParam(defaultValue: "${env.debug}", description: 'Отладка', name: 'debug')   
     }
    
     agent {        
         label "${(env.jenkinsAgent == null || env.jenkinsAgent == 'null') ? "master" : env.jenkinsAgent}"
     }
     environment {
-
         LOGOS_LEVEL = logos_level()                
         SYNC_REPO_BUILD_USER = build_user()
         SYNC_REPO_UPDATE_DYNAMIC = dynamicUpdate()
@@ -70,9 +52,12 @@ pipeline {
         SYNC_REPO_BACKGROUND = true
         SYNC_REPO_USEPOWERSHELL = true
         SYNC_REPO_PAUSE_PRED_BUILD = pausePredBuildToInt()
+        SYNC_REPO_BUILD_STARTFROMPOSITION = startFromPositionToInt()
         SYNC_REPO_BUILD_LISTMETADATA = "${listMetadataBuild}"
-
-                }                
+        SYNC_REPO_BUILD_LISTMETADATA_INCLUDECHILDOBJECTS = includeChildObjects()
+        BASE_ID = "${baseID}"
+        PLATFORM_ID = "${platformID}"
+                }                                
     options {
         timeout(time: 8, unit: 'HOURS') 
         buildDiscarder(logRotator(numToKeepStr:'10'))
@@ -162,6 +147,12 @@ def dynamicUpdate() {
 
 }
 
+def includeChildObjects() { 
+ 
+    return params.includeChildObjects
+
+}
+
 def keepLockIB() { 
  
     return params.keepLockIB
@@ -172,6 +163,14 @@ def pausePredBuildToInt() {
 
     value = 0
     value = params.pausePredBuild
+    return value   
+
+}
+
+def startFromPositionToInt() { 
+
+    value = 1
+    value = params.startFromPosition
     return value   
 
 }
